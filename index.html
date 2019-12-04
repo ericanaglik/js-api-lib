@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Yoda Translator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script>
+</head>
+<body>
+    <blockquote></blockquote>
+    <form>
+        <textarea></textarea>
+        <button type="submit">Submit</button>
+        
+    </form>
+    
+    <script>
+        const form = document.querySelector("form")
+        const blockquote = document.querySelector("blockquote")
+        const textarea = document.querySelector("textarea")
+        form.addEventListener("submit", function(e) {
+            e.preventDefault()
+            const text = textarea.value
+            const path = `https://api.funtranslations.com/translate/yoda.json?text=${text}`
+            // https://api.funtranslations.com/translate/yoda.json?text=Master%20Obiwan%20has%20lost%20a%20planet.
+            fetch(path)
+                .then(function(res){
+                    return res.json()
+                })
+                .then(function(json){
+                    console.log(json)
+                    blockquote.innerHTML = json.contents.translated
+                })
+                .catch(function(err) {
+                    console.log(err.message)
+                })
+        })
+    </script>
+</body>
+</html>
